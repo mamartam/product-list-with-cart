@@ -1,0 +1,23 @@
+/* VARIABLES */
+/* FONTS */
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("/assets/fonts/Red_Hat_Text/RedHatText-VariableFont_wght.ttf");
+}
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+/* BASIC STYLES */
+body {
+  font-family: "Red Hat Text";
+  font-size: 16px;
+}
+/* TABLET STYLES */
+@media screen and (min-width: 768px) {
+}
+/* DESCTOP STYLES */
+@media screen and (min-width: 1024px) {
+}
