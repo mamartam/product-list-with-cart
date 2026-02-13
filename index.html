@@ -12,6 +12,40 @@
     <title>Product list with cart</title>
   </head>
   <body>
+    <main>
+      <section class="menu-section">
+        <h2 class="menu-section-header">Desserts</h2>
+        <div class="menu-items-container">
+          <article class="menu-item">
+            <div class="menu-item-image-container">
+              <picture>
+                <source
+                  media="(min-width: 1024px)"
+                  srcset="assets/images/image-baklava-desktop.jpg"
+                />
+                <source
+                  media="(min-width: 768px)"
+                  srcset="assets/images/image-baklava-tablet.jpg"
+                />
+                <img
+                  src="assets/images/image-baklava-mobile.jpg"
+                  alt="Menu item name"
+                />
+              </picture>
+            </div>
+            <div class="menu-item-btn-container">
+              <button class="add-to-cart-btn" type="button">Add to cart</button>
+            </div>
+            <div class="menu-item-info-container">
+              <p class="type-of-dessert">Baklava</p>
+              <h2>Pistachio Baklava</h2>
+              <p class="menu-item-price">$4.00</p>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="cart-section"></section>
+    </main>
     <script defer src="js/main.js"></script>
   </body>
 </html>
