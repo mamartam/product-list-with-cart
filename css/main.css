@@ -124,7 +124,63 @@ main {
   justify-content: center;
   align-items: center;
 }
+
 .not-empty-cart {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-of-added-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.item-info {
+}
+.amoumt-of-items {
+  color: var(--red);
+  font-weight: 600;
+  margin-right: 1em;
+}
+.price-for-one-item {
+  margin-right: 1em;
+}
+.price-for-all-items {
+  margin-right: 1em;
+}
+.delete-from-cart-container {
+}
+.delete-from-cart-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.total-price-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+.message-about-delivery {
+  background-color: var(--body-bg);
+  padding: 1em 0;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+}
+.confirm-order-btn {
+  background-color: var(--red);
+  color: var(--cart-bg);
+  padding: 1em 0;
+  border-radius: 2em;
+}
+.unactive {
   display: none;
 }
 /* TABLET STYLES */
