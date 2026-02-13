@@ -1,9 +1,19 @@
 /* VARIABLES */
+:root {
+  --body-bg: hsl(13, 31%, 94%);
+  --cart-bg: hsl(20, 50%, 98%);
+  --darkest-rose: hsl(14, 65%, 9%);
+  --dark-brown: hsl(12, 20%, 44%);
+  --red: hsl(14, 86%, 42%);
+  --green: hsl(159, 69%, 38%);
+}
+
 /* FONTS */
 @font-face {
   font-family: "Red Hat Text";
   src: url("/assets/fonts/Red_Hat_Text/RedHatText-VariableFont_wght.ttf");
 }
+
 /* RESET */
 * {
   box-sizing: border-box;
@@ -14,26 +24,35 @@ button {
   border: none;
   background-color: transparent;
 }
+
 /* BASIC STYLES */
 body {
   font-family: "Red Hat Text";
   font-size: 16px;
+  background-color: var(--body-bg);
 }
 main {
   display: flex;
   flex-direction: column;
   margin: 2em;
+  gap: 3em;
 }
 .menu-section {
 }
 .menu-section-header {
   margin-bottom: 1em;
+  color: var(--darkest-rose);
+  font-size: 2em;
+  font-weight: 700;
 }
 .menu-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
 }
 .menu-item {
   max-width: 350px;
-  margin-bottom: 1em;
 }
 .menu-item-image-container {
   position: relative;
@@ -74,11 +93,33 @@ main {
 }
 .type-of-dessert {
 }
-.menu-item-price {
+.name-of-item {
+  font-size: 1em;
+  color: var(--darkest-rose);
 }
+.menu-item-price {
+  color: var(--dark-brown);
+  font-weight: 700;
+}
+/* CART SECTION */
 .cart-section {
+  border-radius: 0.5em;
+  padding: 1.5em;
+  background-color: var(--cart-bg);
+  max-width: 350px;
+}
+.cart-header {
+  margin-bottom: 1em;
+  color: var(--red);
+  font-weight: 700;
 }
 .defolt-bg-for-empty-cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.not-empty-cart {
   display: none;
 }
 /* TABLET STYLES */

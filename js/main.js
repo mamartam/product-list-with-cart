@@ -35,7 +35,7 @@ function displayingData(array) {
 
         <div class="menu-item-info-container">
           <p class="type-of-dessert">${item.category}</p>
-          <h2>${item.name}</h2>
+          <h2 class="name-of-item">${item.name}</h2>
           <p class="menu-item-price">$${item.price.toFixed(2)}</p>
         </div>
       </article>`;
