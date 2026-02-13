@@ -32,10 +32,17 @@
                   alt="Menu item name"
                 />
               </picture>
+              <div class="menu-item-btn-container">
+                <button class="add-to-cart-btn" type="button">
+                  <img
+                    src="assets/images/icon-add-to-cart.svg"
+                    alt="icon-add-to-cart"
+                  />
+                  Add to Cart
+                </button>
+              </div>
             </div>
-            <div class="menu-item-btn-container">
-              <button class="add-to-cart-btn" type="button">Add to cart</button>
-            </div>
+
             <div class="menu-item-info-container">
               <p class="type-of-dessert">Baklava</p>
               <h2>Pistachio Baklava</h2>
@@ -44,7 +51,44 @@
           </article>
         </div>
       </section>
-      <section class="cart-section"></section>
+      <section class="cart-section">
+        <h2 class="cart-header">
+          Your Cart (<span class="number-of-items-in-the-cart">0</span>)
+        </h2>
+        <div class="defolt-bg-for-empty-cart">
+          <img
+            src="assets/images/illustration-empty-cart.svg"
+            alt="illustration-empty-cart"
+          />
+          <p>Your added items will appear here</p>
+        </div>
+        <div class="not-empty-cart">
+          <div class="list-ofadded-items">
+            <div class="item-info">
+              <h3>Classic Tiramisu</h3>
+              <p>
+                <span class="amoumt-of-items">1x</span>
+                <span class="price-for-one-item">@$5.50</span>
+                <span class="price-for-all-items">$5.50</span>
+              </p>
+            </div>
+            <div class="delete-from-cart-container">
+              <button class="delete-from-cart-btn" type="button">
+                <img src="assets/images/icon-remove-item.svg" alt="" />
+              </button>
+            </div>
+          </div>
+          <div class="total-price-container">
+            <p>Order Total</p>
+            <p>$46.50</p>
+          </div>
+          <div class="message-about-delivery">
+            <img src="assets/images/icon-carbon-neutral.svg" alt="" />
+            This is a <span>carbon-neutral</span> delivery
+          </div>
+          <button type="button" class="confirm-order-btn">Confirm Order</button>
+        </div>
+      </section>
     </main>
     <script defer src="js/main.js"></script>
   </body>

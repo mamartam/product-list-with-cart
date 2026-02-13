@@ -10,10 +10,77 @@
   margin: 0;
   padding: 0;
 }
+button {
+  border: none;
+  background-color: transparent;
+}
 /* BASIC STYLES */
 body {
   font-family: "Red Hat Text";
   font-size: 16px;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+}
+.menu-section {
+}
+.menu-section-header {
+  margin-bottom: 1em;
+}
+.menu-items-container {
+}
+.menu-item {
+  max-width: 350px;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+.menu-item-image-container {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1em;
+}
+.menu-item-image-container picture {
+  width: 350px;
+}
+.menu-item-image-container picture source,
+.menu-item-image-container picture img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5em;
+}
+
+.menu-item-btn-container {
+  position: absolute;
+  z-index: 2;
+  bottom: -1em;
+  left: 25%;
+}
+.add-to-cart-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75em 1.5em;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 2em;
+  font-weight: 700;
+  cursor: pointer;
+}
+.add-to-cart-btn img {
+  margin-right: 0.5em;
+}
+.menu-item-info-container {
+}
+.type-of-dessert {
+}
+.menu-item-price {
+}
+.cart-section {
+}
+.defolt-bg-for-empty-cart {
+  display: none;
 }
 /* TABLET STYLES */
 @media screen and (min-width: 768px) {
