@@ -132,6 +132,10 @@ main {
 
 .list-of-added-items {
   display: flex;
+  flex-direction: column;
+}
+.added-item {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1em;
