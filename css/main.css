@@ -37,6 +37,10 @@ main {
   margin: 2em;
   gap: 3em;
 }
+.error-message {
+  color: var(--red);
+  font-weight: 700;
+}
 .menu-section {
 }
 .menu-section-header {
@@ -69,10 +73,33 @@ main {
 }
 
 .menu-item-btn-container {
+  display: block;
   position: absolute;
   z-index: 2;
   bottom: -1em;
   left: 25%;
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--red);
+  width: 150px;
+  padding: 0.75em 1em;
+  border-radius: 2em;
+}
+
+.counter .minus-btn,
+.counter .plus-btn {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  color: wheat;
+  cursor: pointer;
 }
 .add-to-cart-btn {
   display: flex;
@@ -85,8 +112,12 @@ main {
   font-weight: 700;
   cursor: pointer;
 }
+
 .add-to-cart-btn img {
   margin-right: 0.5em;
+}
+.make-disable-btn {
+  display: none;
 }
 .menu-item-info-container {
 }
