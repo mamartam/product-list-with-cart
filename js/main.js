@@ -1,160 +1,260 @@
-// dom
 const menuItemsContainer = document.querySelector(".menu-items-container");
-const defoltBgForEmptyCart = document.querySelector(
-  ".defolt-bg-for-empty-cart ",
-);
-const notEmptyCart = document.querySelector(".not-empty-cart");
-const listOfAddedItems = document.querySelector(".list-of-added-items");
-const plusBtn = document.querySelector(".plus-btn");
-const minusBtn = document.querySelector(".minus-btn");
-const numberOfItemsInTheCart = document.querySelector(
-  ".number-of-items-in-the-cart",
-);
-// const addToCartBtn = document.querySelector(".add-to-cart-btn");
+const cartCount = document.querySelector(".cart__count");
+const cartItemRemoveBtns = document.querySelectorAll(".cart-item__remove-btn");
 
-// -----------------------------------------------------------------
+const arrayOfAddedItems = [];
+let countItems = 0;
 
-const addedItemsToTheCart = [];
-// async code to get data from external source
-async function gettingInfoFromExternalSource() {
+async function getData() {
   try {
     const response = await fetch("js/data.json");
-    const arrayOfdata = await response.json();
-    console.log(arrayOfdata);
-    displayingData(arrayOfdata);
-    menuItemsContainer.addEventListener("click", (event) => {
-      if (event.target.closest(".add-to-cart-btn")) {
-        let counterContainer = event.target
-          .closest(".add-to-cart-btn")
-          .closest(".menu-item-btn-container")
-          .querySelector(".counter");
+    const data = await response.json();
 
-        counterContainer.classList.remove("make-disable-btn");
-        let addToCartBtn = event.target.closest(".add-to-cart-btn");
-        addToCartBtn.classList.add("make-disable-btn");
-        let btnsContainerId = Number(
-          event.target
-            .closest(".add-to-cart-btn")
-            .closest(".menu-item-btn-container").dataset.id,
-        );
-        addedItemsToTheCart.push({
-          amount: 1,
-          name: arrayOfdata[btnsContainerId].name,
-          price: arrayOfdata[btnsContainerId].price,
-          indexInArray: btnsContainerId,
-        });
-      }
-      if (event.target.closest(".plus-btn")) {
-        let btnsContainerId = Number(
-          event.target.closest(".plus-btn").closest(".menu-item-btn-container")
-            .dataset.id,
-        );
-        console.log(btnsContainerId);
-        let ExistedItem = addedItemsToTheCart.find((el) => {
-          return el.indexInArray === btnsContainerId;
-        });
+    displayingData(data); //function for displaying data on the screen
+    addItemToTheCart(arrayOfAddedItems, data); //function for "add to the cart" button
 
-        if (ExistedItem !== undefined) {
-          ExistedItem.amount += 1;
-        }
-      }
-      if (event.target.closest(".minus-btn")) {
-        let btnsContainerId = Number(
-          event.target.closest(".minus-btn").closest(".menu-item-btn-container")
-            .dataset.id,
-        );
-        let ExistedItem = addedItemsToTheCart.find((el) => {
-          return el.indexInArray === btnsContainerId;
-        });
-        let i = ExistedItem.indexInArray;
-        if (ExistedItem.amount === 1) {
-          console.log(addedItemsToTheCart.indexOf(ExistedItem));
-          addedItemsToTheCart.splice(
-            addedItemsToTheCart.indexOf(ExistedItem),
-            1,
-          );
-          let addToCartBtn = event.target
-            .closest(".menu-item-btn-container")
-            .querySelector(".add-to-cart-btn");
-          addToCartBtn.classList.remove("make-disable-btn");
-          let counterContainer = event.target
-            .closest(".minus-btn")
-            .closest(".menu-item-btn-container")
-            .querySelector(".counter");
+    const addBtns = document.querySelectorAll(".plus-btn");
+    const removeBtns = document.querySelectorAll(".minus-btn");
 
-          counterContainer.classList.add("make-disable-btn");
-        } else {
-          ExistedItem.amount -= 1;
-        }
-      }
-      console.log(addedItemsToTheCart);
-
-      let amoutnOfItems = 0;
-      addedItemsToTheCart.forEach((i) => {
-        amoutnOfItems += i.amount;
+    //function for adding items to the cart
+    addBtns.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        addBtn(event, arrayOfAddedItems, data);
       });
-      numberOfItemsInTheCart.textContent = amoutnOfItems;
-      listOfAddedItems.innerHTML = "";
-      addedItemsToTheCart.forEach((item) => {
-        console.log(item.name);
-        listOfAddedItems.innerHTML += `<div class="added-item">
-                <div class="item-info">
-                  <h3>${item.name}</h3>
-                  <p>
-                    <span class="amoumt-of-items">${item.amount}</span>
-                    <span class="price-for-one-item">${item.price}</span>
-                    <span class="price-for-all-items">...</span>
-                  </p>
-                </div>
-                <div class="delete-from-cart-container">
-                  <button class="delete-from-cart-btn" type="button">
-                    <img src="assets/images/icon-remove-item.svg" alt="" />
-                  </button>
-                </div>
-              </div>
-              <hr />`;
+    });
+    //function for removing items from the cart one by one
+    removeBtns.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        removeBtn(event, arrayOfAddedItems);
       });
     });
   } catch (error) {
     console.log(error);
-    menuItemsContainer.innerHTML = `<p class="error-message">Something went wrong! Try to refresh this page...</p>`;
-  } finally {
-    console.log("Finish");
   }
 }
-gettingInfoFromExternalSource();
-const btnContainer = document.querySelector(".menu-item-btn-container");
+getData();
 
-//
+//function for displaying data on the screen
 function displayingData(array) {
   menuItemsContainer.innerHTML = "";
-  const htmlContent = array
-    .map((item, index) => {
-      return `
-      <article class="menu-item">
-        <div class="menu-item-image-container">
-          <picture>
-            <source media="(min-width: 1024px)" srcset="${item.image.desktop}" />
-            <source media="(min-width: 768px)" srcset="${item.image.tablet}" />
-            <img src="${item.image.mobile}" alt="${item.name}" />
-          </picture>
-          <div class="menu-item-btn-container" data-id="${index}">
-            <button class="add-to-cart-btn" type="button">
-              <img src="assets/images/icon-add-to-cart.svg" alt="icon-add-to-cart" />
-              Add to Cart
-            </button>
-            <div class="counter make-disable-btn">
-             <button class="minus-btn">-</button><span class="number-of-items">1</span><button class="plus-btn">+</button></div>
-          </div>
-        </div>
-
-        <div class="menu-item-info-container">
-          <p class="type-of-dessert">${item.category}</p>
-          <h2 class="name-of-item">${item.name}</h2>
-          <p class="menu-item-price">$${item.price.toFixed(2)}</p>
-        </div>
-      </article>`;
-    })
-    .join("");
-  menuItemsContainer.innerHTML = htmlContent;
+  let arrayHtml = array.map((element) => {
+    return `<article class="menu-item" data-id="${element.id}">
+            <picture>
+              <source
+                media="(min-width:1200px)"
+                srcset="${element.image.desktop}"
+              />
+              <source
+                media="(min-width:600px)"
+                srcset="${element.image.tablet}"
+              />
+              <img
+                src="${element.image.mobile}"
+                alt="Menu item name"
+              />
+            </picture>
+            <div class="add-remove-btns-container">
+              <button type="button" class="add-to-the-cart-btn active">
+                <img
+                  src="./assets/images/icon-add-to-cart.svg"
+                  alt="Add to the cart icon"
+                />
+                Add to Cart
+              </button>
+              <div class="plus-minus-btns">
+                <button type="button" class="minus-btn">
+                  <img
+                    src="./assets/images/icon-decrement-quantity.svg"
+                    alt=""
+                  />
+                </button>
+                <p class="amout-of-menu-item">0</p>
+                <button type="button" class="plus-btn">
+                  <img
+                    src="./assets/images/icon-increment-quantity.svg"
+                    alt=""
+                  />
+                </button>
+              </div>
+            </div>
+            <p class="category">${element.category}</p>
+            <h3 class="name-of-dish">${element.name}</h3>
+            <p class="item-price">$${Number(element.price).toFixed(2)}</p>
+          </article>`;
+  });
+  arrayHtml = arrayHtml.join("");
+  menuItemsContainer.innerHTML = arrayHtml;
 }
+//function for "add to the cart" button
+function addItemToTheCart(array, mainArray) {
+  const addToTheCartBtns = document.querySelectorAll(".add-to-the-cart-btn"); // all add-to-the-cart-btns
+  addToTheCartBtns.forEach((element) => {
+    // loop for adding event listener for each btn
+    element.addEventListener("click", (btn) => {
+      //Finding hmtl element where is information about amount
+      //of items which was added to the cart (in the menu section)
+      let amountOfMenuItem = btn.target
+        .closest(".menu-item")
+        .querySelector(".amout-of-menu-item");
+
+      let itemId = btn.target.closest(".menu-item").dataset.id;
+      let itemFrommenu = mainArray.find((e) => {
+        return e.id === String(itemId);
+      });
+      let newItem = { ...itemFrommenu, amount: 1 }; //clonning data to avoid changes in a main array of data
+      amountOfMenuItem.innerHTML = newItem.amount;
+      if (array.length === 0) {
+        array.push(newItem);
+        array.innerHTML = newItem.amount; //inserting data into html tag
+      } else {
+        let indexOfElement = array.findIndex((item) => item.id === itemId);
+        if (indexOfElement !== -1) {
+          array[indexOfElement].amount += 1;
+          amountOfMenuItem.innerHTML = array[indexOfElement].amount; //inserting data into html tag
+        } else {
+          array.push(newItem);
+          amountOfMenuItem.innerHTML = newItem.amount; //inserting data into html tag
+        }
+      }
+
+      btn.target
+        .closest(".menu-item")
+        .querySelector(".plus-minus-btns")
+        .classList.add("active");
+      btn.target
+        .closest(".menu-item")
+        .querySelector(".add-to-the-cart-btn")
+        .classList.remove("active");
+      itemCounterInTheCart();
+      displayingItemsFromCart();
+      totalPriceFunc();
+      console.log(cartItemRemoveBtns);
+    });
+  });
+}
+
+//function for adding items to the cart
+
+function addBtn(btn, array) {
+  let amountOfMenuItem = btn.target
+    .closest(".menu-item")
+    .querySelector(".amout-of-menu-item");
+  let itemId = btn.target.closest(".menu-item").dataset.id;
+  let indexOfElement = array.findIndex((item) => item.id === itemId);
+  array[indexOfElement].amount += 1;
+  amountOfMenuItem.innerHTML = array[indexOfElement].amount;
+  console.log(array);
+  itemCounterInTheCart();
+  displayingItemsFromCart();
+  totalPriceFunc();
+  console.log(cartItemRemoveBtns);
+}
+
+//function for removing items from the cart onde by one
+
+function removeBtn(btn, array) {
+  let amountOfMenuItem = btn.target
+    .closest(".menu-item")
+    .querySelector(".amout-of-menu-item");
+  let itemId = btn.target.closest(".menu-item").dataset.id;
+  let itemFromMenu = array.find((e) => {
+    return e.id === String(itemId);
+  });
+  if (itemFromMenu.amount > 1) {
+    itemFromMenu.amount -= 1;
+    amountOfMenuItem.innerHTML = itemFromMenu.amount;
+  } else if (itemFromMenu.amount === 1) {
+    let indexOfElement = array.findIndex((item) => item.id === itemId);
+    array.splice(indexOfElement, 1);
+    btn.target
+      .closest(".menu-item")
+      .querySelector(".plus-minus-btns")
+      .classList.remove("active");
+    btn.target
+      .closest(".menu-item")
+      .querySelector(".add-to-the-cart-btn")
+      .classList.add("active");
+  }
+
+  itemCounterInTheCart(); //function to get display amount of all elements int the cart to the screen (cart section)
+  displayingItemsFromCart(); // function to display all elements which was added to the cart
+  totalPriceFunc();
+}
+
+//function to get display amount of all elements in the cart to the screen (cart section)
+function itemCounterInTheCart() {
+  let countItems = 0;
+  arrayOfAddedItems.forEach((e) => {
+    countItems += e.amount;
+  });
+  cartCount.textContent = countItems;
+  const cartNotEmpty = document.querySelector(".cart--not-empty");
+  const emptyCart = document.querySelector(".empty-cart");
+  if (countItems === 0) {
+    cartNotEmpty.classList.add("hide");
+    emptyCart.classList.remove("hide");
+  } else if (countItems > 0) {
+    cartNotEmpty.classList.remove("hide");
+    emptyCart.classList.add("hide");
+  }
+}
+
+const cartItems = document.querySelector(".cart__items");
+// function to display all elements which was added to the cart
+function displayingItemsFromCart() {
+  cartItems.innerHTML = "";
+
+  let itemsFromCartHtml = arrayOfAddedItems.map((element) => {
+    const totalPrice = Number(element.price) * Number(element.amount);
+
+    return `<div class="cart-item" data-id="${element.id}">
+      <div class="cart-item__info">
+        <p class="cart-item__name">${element.name}</p>
+        <br />
+        <p>
+          <span class="cart-item__amount">${element.amount}x</span>
+          <span class="cart-item__price">@ $${Number(element.price).toFixed(2)}</span>
+          <span class="cart-item__total-price">$${totalPrice.toFixed(2)}</span>
+        </p>
+      </div>
+
+      <button class="cart-item__remove-btn">
+        <img src="./assets/images/icon-remove-item.svg" alt="Remove item" />
+      </button>
+    </div><hr>`;
+  });
+
+  cartItems.innerHTML = itemsFromCartHtml.join("");
+}
+// fucntion to count and display total price for all items added to the cart
+function totalPriceFunc() {
+  const totalPrice = document.querySelector(".total-price");
+  let price = 0;
+  arrayOfAddedItems.forEach((element) => {
+    price += Number(element.price) * Number(element.amount);
+  });
+  totalPrice.textContent = Number(price).toFixed(2);
+}
+// events listener for container which contains list of added
+// items and which adds ability to remove item from the cart section
+cartItems.addEventListener("click", (event) => {
+  if (event.target.closest(".cart-item__remove-btn")) {
+    elementId = event.target.closest(".cart-item").dataset.id;
+    let indexOfElement = arrayOfAddedItems.findIndex(
+      (item) => item.id === elementId,
+    );
+    let arr = document.querySelectorAll(".menu-item");
+    arr.forEach((e) => {
+      if (e.dataset.id === elementId) {
+        e.querySelector(".add-to-the-cart-btn").classList.add("active");
+        e.querySelector(".plus-minus-btns").classList.remove("active");
+      }
+    });
+    arrayOfAddedItems.splice(indexOfElement, 1);
+    itemCounterInTheCart();
+    displayingItemsFromCart();
+    totalPriceFunc();
+  } else {
+    return;
+  }
+});
