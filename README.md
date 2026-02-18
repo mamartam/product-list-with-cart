@@ -35,3 +35,4 @@ This project was created based on a Frontend Mentor [https://www.frontendmentor.
 - Optimize performance for larger datasets
 
 ## 🍿 Video
+https://github.com/user-attachments/assets/843bab82-53d4-4c22-9891-19b4fa307541
