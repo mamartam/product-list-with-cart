@@ -20,7 +20,7 @@ async function getData() {
     //function for adding items to the cart
     addBtns.forEach((btn) => {
       btn.addEventListener("click", (event) => {
-        addBtn(event, arrayOfAddedItems, data);
+        addBtn(event, arrayOfAddedItems);
       });
     });
     //function for removing items from the cart one by one
